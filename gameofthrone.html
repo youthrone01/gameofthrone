@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Game of Throne</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="style.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('img').click(function(){
+                    var houseID = $(this).attr("id");
+                    console.log(houseID);
+                    $.get("https://www.anapioficeandfire.com/api/houses/"+houseID,function(res){
+                        
+                        var houseName = res.name;                        
+                        var houseWords = res.words;
+                        var houseTitle ="";
+                        for(var i = 0;i < res.titles.length;i++){
+                            if(i == res.titles.length-1 ){
+                                houseTitle+= res.titles[i]
+                            }else{
+                                houseTitle+= res.titles[i] + ", ";
+                            }                            
+                        }
+
+                        $('#name').text("Name: "+houseName);
+                        $('#words').text("Words: "+houseWords);
+                        $('#title').text("Titles: "+houseTitle);
+
+                    },'json');
+                })
+            })
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="images">
+                <img id="15" src="baratheon.png" alt="baratheon_logo">
+                <img id="229" src="lannister.jpg" alt="lannister_logo">
+                <img id="362" src="stark.jpg" alt="stark_logo">
+                <img id="378" src="targaryen.jpg" alt="targaryen_logo">
+            </div>
+            <h2>House Details</h2>
+            <div class="details">
+                <p id="name"></p>
+                <p id="words"></p>
+                <p id="title"></p>
+                
+            </div>
+        </div>
+    
+    </body>
+</html>
